@@ -3,6 +3,7 @@ import 'tela_agendamento.dart';
 import 'loja.dart';
 import 'tela_pets.dart';
 import 'notificacoes.dart';
+import 'tela_login.dart';
 
 void main() {
   runApp(const MeuApp());
@@ -20,7 +21,7 @@ class MeuApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
-      home: const TelaInicial(),
+      home: const TelaLogin(),
     );
   }
 }
