@@ -1,0 +1,78 @@
+#O script utilizado neste código segue uma sintaxe de comandos exigido pelo Github Actions
+
+name: CI do petshop
+
+# on: define em quais situações a análise deve ser disparada
+on: 
+    push:
+        branches: ["main"]
+    pull request:
+        branches: ["main"]
+
+#jobs: agrupa os passos a serem executados. Dentro do jobs, ficam as builds
+#build: passo ou tarefa específica
+
+#Job para a aplicação web java
+jobs:
+    build-java:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Copiar código
+              uses: actions/checkout@v4
+
+            - name: Configurar Java
+              uses: actions/setup-java@v4
+              with:
+                distribution: 'temurin'
+                java-version: '27'
+
+            - name: Testar backend Java
+              run: mvn clean test
+
+              
+# 2. Job para a aplicação Flutter (Mobile)
+  build-flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copiar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.142.0'
+
+      - name: Instalar dependências e testar
+        run: |
+          flutter pub get
+          flutter test
+
+
+  # 3. Job para o MySQL (Banco de dados)
+  test-database:
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: rootpassword
+          MYSQL_DATABASE: petshop_db
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Copiar código
+        uses: actions/checkout@v4
+      
+      - name: Testar conexão ou migrações do Banco
+        run: |
+          echo "O banco MySQL subiu com sucesso e está pronto para testes de migração!"
+          # Aqui você pode rodar scripts de migração (ex: Flyway, Liquibase) ou testes que conectam no banco.
+            
+
+
+
+
+
