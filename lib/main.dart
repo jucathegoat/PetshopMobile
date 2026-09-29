@@ -26,7 +26,7 @@ class MeuApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: const TelaInicial(),
+      home: const TelaLogin(),
     );
   }
 }

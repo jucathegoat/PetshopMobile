@@ -17,18 +17,19 @@ class TelaAvaliacao extends StatelessWidget {
               onPressed: () {
               },
               child: const Text('1 - Ruim'),
-            )
-            const SizedBox(height: 10),
+            ),
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
               },
               child: const Text('2 - Bom'), 
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
               },
               child: const Text('3 - Excelente'), 
+            ),
           ],
         ),
       ),
