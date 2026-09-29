@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: CI do Petshop
 
 on:
@@ -18,11 +19,47 @@ jobs:
           echo "O código do backend Java está em fase de estruturação."
 
   # 2. Job para a aplicação Flutter (Mobile)
+=======
+#O script utilizado neste código segue uma sintaxe de comandos exigido pelo Github Actions
+
+name: CI do petshop
+
+# on: define em quais situações a análise deve ser disparada
+on: 
+    push:
+        branches: ["main"]
+    pull request:
+        branches: ["main"]
+
+#jobs: agrupa os passos a serem executados. Dentro do jobs, ficam as builds
+#build: passo ou tarefa específica
+
+#Job para a aplicação web java
+jobs:
+    build-java:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Copiar código
+              uses: actions/checkout@v4
+
+            - name: Configurar Java
+              uses: actions/setup-java@v4
+              with:
+                distribution: 'temurin'
+                java-version: '27'
+
+            - name: Testar backend Java
+              run: mvn clean test
+
+              
+# 2. Job para a aplicação Flutter (Mobile)
+>>>>>>> 8360ee9 (Adiciona pipeline de CI/CD)
   build-flutter:
     runs-on: ubuntu-latest
     steps:
       - name: Copiar código
         uses: actions/checkout@v4
+<<<<<<< HEAD
       - name: Configurar Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -31,6 +68,19 @@ jobs:
         run: |
           flutter pub get
           flutter analyze
+=======
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.142.0'
+
+      - name: Instalar dependências e testar
+        run: |
+          flutter pub get
+          flutter test
+
+>>>>>>> 8360ee9 (Adiciona pipeline de CI/CD)
 
   # 3. Job para o MySQL (Banco de dados)
   test-database:
@@ -50,6 +100,19 @@ jobs:
       - name: Copiar código
         uses: actions/checkout@v4
       
+<<<<<<< HEAD
       - name: Testar conexão do Banco
         run: |
           echo "O banco MySQL subiu com sucesso!"
+=======
+      - name: Testar conexão ou migrações do Banco
+        run: |
+          echo "O banco MySQL subiu com sucesso e está pronto para testes de migração!"
+          # Aqui você pode rodar scripts de migração (ex: Flyway, Liquibase) ou testes que conectam no banco.
+            
+
+
+
+
+
+>>>>>>> 8360ee9 (Adiciona pipeline de CI/CD)
