@@ -26,7 +26,7 @@ jobs:
       - name: Configurar Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.142.0'
+          flutter-version: 'stable'
       - name: Verificar dependências e análise do Flutter
         run: |
           flutter pub get
