@@ -63,7 +63,11 @@ jobs:
       - name: Configurar Flutter
         uses: subosito/flutter-action@v2
         with:
+<<<<<<< HEAD
           flutter-version: '3.47.5'
+=======
+          flutter-version: 'stable'
+>>>>>>> 8aaa480 (Novo pipeline de CI)
       - name: Verificar dependências e análise do Flutter
         run: |
           flutter pub get
