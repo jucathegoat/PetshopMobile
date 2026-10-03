@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/main.dart';
-
+import 'package:flutter_application_1/tela_cadastro.dart';
 void main() {
   runApp(const TelaLogin());
 }
@@ -11,6 +11,8 @@ class TelaLogin extends StatefulWidget {
   @override
   TelaLoginState createState() => TelaLoginState();
 }
+
+String usuario = '';
 
 class TelaLoginState extends State<TelaLogin> {
   @override
@@ -35,6 +37,11 @@ class TelaLoginState extends State<TelaLogin> {
                   border: OutlineInputBorder(),
                   labelText: "Usuário",
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    usuario = value;
+                  });
+                },
               ),
             ),
             SizedBox(height: 10),
@@ -51,9 +58,18 @@ class TelaLoginState extends State<TelaLogin> {
             SizedBox(height: 20),
             FilledButton(
               onPressed: () {
+                if(usuario.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Por favor, insira um usuário válido.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  return;
+                }
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const TelaInicial()),
+                  MaterialPageRoute(builder: (context) => TelaInicial(usuario: usuario)),
                 );
               },
               style: ButtonStyle(
@@ -66,10 +82,22 @@ class TelaLoginState extends State<TelaLogin> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 30),
-            Text(
-              'Cadastre-se',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            SizedBox(height: 20),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TelaCadastro()),
+                );
+              },
+              child: Text(
+                'Cadastre-se',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 26, 58, 27),
+                ),
+              ),
             ),
           ],
         ),

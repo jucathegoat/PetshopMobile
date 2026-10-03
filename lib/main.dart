@@ -20,9 +20,7 @@ class MeuApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Pet Shop Fila Zero',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.indigo,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
 
@@ -31,9 +29,18 @@ class MeuApp extends StatelessWidget {
   }
 }
 
-class TelaInicial extends StatelessWidget {
-  const TelaInicial({super.key});
+class TelaInicial extends StatefulWidget {
+  const TelaInicial({super.key,
+  required this.usuario,
+  });
 
+  final String usuario;
+
+  @override
+  State<TelaInicial> createState() => _TelaInicialState();
+}
+
+class _TelaInicialState extends State<TelaInicial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,8 +66,6 @@ class TelaInicial extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-
-          
             IconButton(
               icon: const Icon(
                 Icons.home,
@@ -77,9 +82,7 @@ class TelaInicial extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const TelaLoja(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const TelaLoja()),
                 );
               },
             ),
@@ -107,9 +110,7 @@ class TelaInicial extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => TelaPets(),
-                  ),
+                  MaterialPageRoute(builder: (context) => TelaPets()),
                 );
               },
             ),
@@ -134,18 +135,15 @@ class TelaInicial extends StatelessWidget {
       ),
 
       body: Container(
-        width: 600,
-        height: 370,
         padding: const EdgeInsets.all(16),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Row(
               children: [
-                const Text(
-                  "Olá João, seja bem-vindo!",
+               Text(
+                  "Olá $usuario, seja bem-vindo!",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -153,7 +151,7 @@ class TelaInicial extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(width: 63),
+                 SizedBox(width: 35),
 
                 IconButton(
                   icon: const Icon(
@@ -163,9 +161,7 @@ class TelaInicial extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => Notificacoes(),
-                      ),
+                      MaterialPageRoute(builder: (context) => Notificacoes()),
                     );
                   },
                 ),
