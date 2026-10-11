@@ -9,7 +9,6 @@ import 'tela_avaliacao.dart';
 void main() {
   runApp(const MeuApp());
 }
-
 class MeuApp extends StatelessWidget {
   const MeuApp({super.key});
 
@@ -22,15 +21,15 @@ class MeuApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
-
       home: const TelaLogin(),
     );
   }
 }
 
 class TelaInicial extends StatefulWidget {
-  const TelaInicial({super.key,
-  required this.usuario,
+  const TelaInicial({
+    super.key,
+    required this.usuario,
   });
 
   final String usuario;
@@ -44,7 +43,6 @@ class _TelaInicialState extends State<TelaInicial> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 252, 243),
-
       appBar: AppBar(
         title: const Text(
           "Pet Shop Fila Zero",
@@ -57,11 +55,9 @@ class _TelaInicialState extends State<TelaInicial> {
         backgroundColor: const Color.fromARGB(255, 249, 243, 243),
         centerTitle: true,
       ),
-
       bottomNavigationBar: BottomAppBar(
         color: const Color.fromARGB(255, 249, 243, 243),
         elevation: 3,
-
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -72,7 +68,6 @@ class _TelaInicialState extends State<TelaInicial> {
               ),
               onPressed: () {},
             ),
-
             IconButton(
               icon: const Icon(
                 Icons.shopping_cart,
@@ -85,7 +80,6 @@ class _TelaInicialState extends State<TelaInicial> {
                 );
               },
             ),
-
             IconButton(
               icon: const Icon(
                 Icons.calendar_month,
@@ -100,7 +94,6 @@ class _TelaInicialState extends State<TelaInicial> {
                 );
               },
             ),
-
             IconButton(
               icon: const Icon(
                 Icons.pets,
@@ -113,7 +106,6 @@ class _TelaInicialState extends State<TelaInicial> {
                 );
               },
             ),
-
             IconButton(
               icon: const Icon(
                 Icons.star,
@@ -132,26 +124,22 @@ class _TelaInicialState extends State<TelaInicial> {
           ],
         ),
       ),
-
       body: Container(
         padding: const EdgeInsets.all(16),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-               Text(
-                  "Olá $usuario, seja bem-vindo!",
-                  style: TextStyle(
+                Text(
+                  "Olá ${widget.usuario}, seja bem-vindo!",
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-
-                 SizedBox(width: 35),
-
+                const SizedBox(width: 35),
                 IconButton(
                   icon: const Icon(
                     Icons.notifications,
@@ -166,7 +154,6 @@ class _TelaInicialState extends State<TelaInicial> {
                 ),
               ],
             ),
-
             const Text(
               "O que deseja fazer hoje?",
               style: TextStyle(
@@ -174,73 +161,25 @@ class _TelaInicialState extends State<TelaInicial> {
                 color: Color.fromARGB(255, 216, 216, 216),
               ),
             ),
-
             const SizedBox(height: 25),
-
             ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.sizeOf(context).width - 20,
                 maxHeight: 250,
               ),
-
               child: CarouselView(
                 itemExtent: 350,
                 backgroundColor: Colors.blueGrey,
-
                 children: [
-                  Image.asset(
-                    "assets/images/banner1.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Image.asset(
-                    "assets/images/banner2.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Image.asset(
-                    "assets/images/banner3.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Image.asset(
-                    "assets/images/banner4.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Image.asset(
-                    "assets/images/banner5.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Image.asset(
-                    "assets/images/banner6.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Image.asset(
-                    "assets/images/banner7.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Image.asset(
-                    "assets/images/banner8.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-
-                  Image.asset(
-                    "assets/images/banner9.png",
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
+                  Image.asset("assets/images/banner1.png", height: 50, fit: BoxFit.cover),
+                  Image.asset("assets/images/banner2.png", height: 50, fit: BoxFit.cover),
+                  Image.asset("assets/images/banner3.png", height: 50, fit: BoxFit.cover),
+                  Image.asset("assets/images/banner4.png", height: 50, fit: BoxFit.cover),
+                  Image.asset("assets/images/banner5.png", height: 50, fit: BoxFit.cover),
+                  Image.asset("assets/images/banner6.png", height: 50, fit: BoxFit.cover),
+                  Image.asset("assets/images/banner7.png", height: 50, fit: BoxFit.cover),
+                  Image.asset("assets/images/banner8.png", height: 50, fit: BoxFit.cover),
+                  Image.asset("assets/images/banner9.png", height: 50, fit: BoxFit.cover),
                 ],
               ),
             ),
