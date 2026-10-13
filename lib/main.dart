@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'tela_agendamento.dart';
 import 'loja.dart';
 import 'tela_pets.dart';

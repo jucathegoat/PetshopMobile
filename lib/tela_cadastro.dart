@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/tela_login.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class TelaCadastro extends StatefulWidget {
   const TelaCadastro({super.key});
@@ -9,6 +12,49 @@ class TelaCadastro extends StatefulWidget {
 }
 
 class _TelaCadastroState extends State<TelaCadastro> {
+
+String nome = '';
+int cpf = 0;
+String email = '';
+String telefone = '';
+String endereco = '';
+String usuario = '';
+String senha = '';
+
+Future<void> cadastrarUsuario() async {
+  var url = Uri.parse('http://localhost:8080/usuario');
+  var resposta = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      'nome': nome,
+      'cpf': cpf,
+      'email': email,
+      'endereco': endereco,
+      'usuario': usuario,
+      'senha': senha,
+    }),
+  );
+
+  if (!mounted) return;
+
+  if (resposta.statusCode == 201 || resposta.statusCode == 200) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Usuario cadastrado com sucesso!')),
+    );
+    nome = '';
+    cpf = 0;
+    email = '';
+    telefone = '';
+    endereco = '';
+    usuario = '';
+    senha = '';
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Erro ao cadastrar usuário')),
+    );
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +82,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   labelText: "Nome",
                   hintText: "Digite seu nome completo",
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    nome = value;
+                  });
+                },
               ),
               SizedBox(height: 10),
               TextField(
@@ -44,6 +95,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   labelText: "CPF",
                   hintText: "Digite seu CPF",
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    cpf = int.tryParse(value) ?? 0;
+                  });
+                },
               ),
               SizedBox(height: 10),
               TextField(
@@ -52,6 +108,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   labelText: "Email",
                   hintText: "Digite seu email",
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    email = value;
+                  });
+                },
               ),
               SizedBox(height: 10),
               TextField(
@@ -60,6 +121,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   labelText: "Telefone",
                   hintText: "(xx) xxxxx-xxxx",
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    telefone = value;
+                  });
+                },
               ),
               SizedBox(height: 10),
               TextField(
@@ -68,6 +134,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   labelText: "Endereço",
                   hintText: "Digite seu endereço",
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    endereco = value;
+                  });
+                },
               ),
               SizedBox(height: 10),
               TextField(
@@ -76,6 +147,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   labelText: "Usuario",
                   hintText: "como deseja ser chamado",
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    usuario = value;
+                  });
+                },
               ),
               SizedBox(height: 10),
               TextField(
@@ -85,13 +161,21 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   labelText: "Senha",
                   hintText: "crie uma senha",
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    senha = value;
+                  });
+                },
               ),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cadastrarUsuario();
+                      Navigator.pop(context);
+                    },
                     style: ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll<Color>(
                         const Color.fromARGB(255, 26, 58, 27),
