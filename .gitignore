@@ -57,9 +57,16 @@ app.*.map.json
 
 manager.json
 env.dart
+<<<<<<< HEAD
 .env-dev
 
 flutter.env
 **/.env
 **/target/
 .env-dev
+=======
+
+flutter.env
+**/.env
+**/target/
+>>>>>>> fdba4dc (adiciona api Spring Boot com integracao MySQL)
