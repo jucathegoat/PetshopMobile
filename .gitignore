@@ -53,3 +53,5 @@ env.dart
 flutter.env
 **/.env
 **/target/
+
+.vs/
