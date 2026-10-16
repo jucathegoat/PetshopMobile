@@ -20,6 +20,7 @@ migrate_working_dir/
 <<<<<<< HEAD
 <<<<<<< HEAD
 .vs/
+<<<<<<< HEAD
 =======
 
 =======
@@ -29,6 +30,8 @@ migrate_working_dir/
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 >>>>>>> ab83314 (Subindo projeto)
+=======
+>>>>>>> 5d4b917 (adiciona api Spring Boot com integracao MySQL)
 #.vscode/
 
 # Flutter/Dart/Pub related
@@ -64,6 +67,7 @@ flutter.env
 **/.env
 **/target/
 <<<<<<< HEAD
+<<<<<<< HEAD
 .env-dev
 =======
 
@@ -75,3 +79,6 @@ flutter.env
 
 .vs/
 >>>>>>> 479b52d (ignora arquivos locais do Visual Studio)
+=======
+.env-dev
+>>>>>>> 5d4b917 (adiciona api Spring Boot com integracao MySQL)
