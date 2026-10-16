@@ -49,3 +49,7 @@ app.*.map.json
 
 manager.json
 env.dart
+
+flutter.env
+**/.env
+**/target/
