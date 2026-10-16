@@ -63,6 +63,7 @@ env.dart
 flutter.env
 **/.env
 **/target/
+<<<<<<< HEAD
 .env-dev
 =======
 
@@ -70,3 +71,7 @@ flutter.env
 **/.env
 **/target/
 >>>>>>> fdba4dc (adiciona api Spring Boot com integracao MySQL)
+=======
+
+.vs/
+>>>>>>> 479b52d (ignora arquivos locais do Visual Studio)
