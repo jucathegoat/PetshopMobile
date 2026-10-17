@@ -16,10 +16,12 @@ class TelaLogin extends StatefulWidget {
   TelaLoginState createState() => TelaLoginState();
 }
 
-  String usuario = '';
-  String senha = '';
 
 class TelaLoginState extends State<TelaLogin> {
+
+  final usuarioControler = TextEditingController();
+  final senhaControler = TextEditingController();
+
 
 
   Future<void> fazerLoign() async {
@@ -27,8 +29,7 @@ class TelaLoginState extends State<TelaLogin> {
     var resposta = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'usuario': usuario, 'senha':senha }),
-    
+      body: jsonEncode({'usuario': usuarioControler.text, 'senha': senhaControler.text}),
     );
 
     if (!mounted) return;
@@ -36,24 +37,40 @@ class TelaLoginState extends State<TelaLogin> {
     if (resposta.statusCode == 200) {
       var dados = jsonDecode(resposta.body);
       if (dados['sucesso'] == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login realizado com sucesso!')),
-        );
-
-          Navigator.push(
+        final cpf = dados['cpf'];
+        ScaffoldMessenger.of(
           context,
-           MaterialPageRoute(
-          builder: (context) => TelaInicial(usuario: usuario)));
+        ).showSnackBar(SnackBar(content: Text('Login realizado com sucesso!')));
 
-      } 
-    } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Usuário ou senha incorretos')),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TelaInicial(usuario: usuarioControler.text, cpf: cpf),
+          ),
         );
       }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Usuário ou senha incorretos')));
+    }
   }
-  
-  
+
+  @override
+  void initState() {
+    super.initState();
+    usuarioControler.clear();
+    senhaControler.clear();
+  }
+
+  @override
+
+  void dispose(){
+
+    usuarioControler.dispose();
+    senhaControler.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,38 +89,30 @@ class TelaLoginState extends State<TelaLogin> {
               SizedBox(
                 width: 200,
                 child: TextField(
+                  controller: usuarioControler,
                   obscureText: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Usuário",
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      usuario = value;
-                    });
-                  },
                 ),
               ),
               SizedBox(height: 10),
               SizedBox(
                 width: 200,
                 child: TextField(
+                  controller: senhaControler,
                   obscureText: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Senha",
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      senha = value;
-                    });
-                  },
                 ),
               ),
               SizedBox(height: 20),
               FilledButton(
                 onPressed: () {
-                  if (usuario.isEmpty) {
+                  if (usuarioControler.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Por favor, insira um usuário válido.'),
@@ -112,7 +121,7 @@ class TelaLoginState extends State<TelaLogin> {
                     );
                     return;
                   }
-                fazerLoign();
+                  fazerLoign();
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll<Color>(

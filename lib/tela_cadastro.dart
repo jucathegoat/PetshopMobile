@@ -14,7 +14,7 @@ class TelaCadastro extends StatefulWidget {
 class _TelaCadastroState extends State<TelaCadastro> {
 
 String nome = '';
-int cpf = 0;
+String cpf = '';
 String email = '';
 String telefone = '';
 String endereco = '';
@@ -43,7 +43,7 @@ Future<void> cadastrarUsuario() async {
       SnackBar(content: Text('Usuario cadastrado com sucesso!')),
     );
     nome = '';
-    cpf = 0;
+    cpf = '';
     email = '';
     telefone = '';
     endereco = '';
@@ -97,7 +97,7 @@ Future<void> cadastrarUsuario() async {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    cpf = int.tryParse(value) ?? 0;
+                    cpf = value;
                   });
                 },
               ),

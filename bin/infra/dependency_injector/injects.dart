@@ -9,8 +9,11 @@ import '../../services/generic_service.dart';
 import '../database/db_configuration.dart';
 import '../database/mysql_db_configuration.dart';
 import '../../dao/usuario_dao.dart';
+import '../../dao/pet_dao.dart';
 import '../../services/usuario_service.dart';
+import '../../services/pet_service.dart';
 import '../../apis/usuario_api.dart';
+import '../../apis/pet_api.dart';
 
 class Injects {
   static DependencyInjector initialize() {
@@ -33,6 +36,10 @@ class Injects {
     di.register<UsuarioDao>(()=> UsuarioDao(di<DbConfiguration>()));
     di.register<UsuarioService>(()=>UsuarioService(usuarioDao: di<UsuarioDao>()));
     di.register<UsuarioApi>(()=> UsuarioApi(di<UsuarioService>()));
+
+    di.register<PetDao>(()=> PetDao(di<DbConfiguration>()));
+    di.register<PetService>(()=>PetService(petDao: di<PetDao>()));
+    di.register<PetApi>(()=> PetApi(di<PetService>()));
     return di;
   }
 }

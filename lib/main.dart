@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'tela_agendamento.dart';
 import 'loja.dart';
 import 'tela_pets.dart';
@@ -27,12 +28,10 @@ class MeuApp extends StatelessWidget {
 }
 
 class TelaInicial extends StatefulWidget {
-  const TelaInicial({
-    super.key,
-    required this.usuario,
-  });
+  const TelaInicial({super.key, required this.usuario, required this.cpf});
 
   final String usuario;
+  final String cpf;
 
   @override
   State<TelaInicial> createState() => _TelaInicialState();
@@ -102,7 +101,9 @@ class _TelaInicialState extends State<TelaInicial> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TelaPets()),
+                  MaterialPageRoute(
+                    builder: (context) => TelaPets(cpf: widget.cpf),
+                  ),
                 );
               },
             ),
@@ -130,18 +131,21 @@ class _TelaInicialState extends State<TelaInicial> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Olá ${widget.usuario}, seja bem-vindo!",
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                Expanded(
+                  child: Text(
+                    "Olá ${widget.usuario}, seja bem-vindo!",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    softWrap: true,
                   ),
                 ),
-                const SizedBox(width: 35),
                 IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.notifications,
                     color: Color.fromARGB(255, 194, 194, 194),
                   ),

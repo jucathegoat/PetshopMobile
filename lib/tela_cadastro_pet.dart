@@ -1,13 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'tela_pets.dart';
+
+import 'dart:convert';
 
 class TelaCadastroPet extends StatefulWidget {
-  const TelaCadastroPet({super.key});
+  const TelaCadastroPet({super.key, required this.cpf});
+
+  final String cpf;
 
   @override
   State<TelaCadastroPet> createState() => _TelaCadastroPetState();
 }
 
 class _TelaCadastroPetState extends State<TelaCadastroPet> {
+
+  final nomeControler = TextEditingController();
+  final racaControler = TextEditingController();
+  final idadeControler = TextEditingController();
+
+  @override
+  void dispose() {
+    nomeControler.dispose();
+    racaControler.dispose();
+    idadeControler.dispose();
+    super.dispose();
+  }
+
+  Future<void> cadastrarPet() async {
+    var url = Uri.parse('http://localhost:8080/cadastrar/pet');
+    var resposta = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'cpf': widget.cpf,
+        'nome': nomeControler.text,
+        'especie': racaControler.text,
+        'idade': int.parse(idadeControler.text)
+      }),
+    );
+
+    if (!mounted) return;
+
+    if (resposta.statusCode == 201 || resposta.statusCode == 200) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Pet cadastrado com sucesso!')));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Erro ao cadastrar pet')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +73,7 @@ class _TelaCadastroPetState extends State<TelaCadastroPet> {
             children: [
               SizedBox(height: 20),
               TextField(
+                controller: nomeControler,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Nome do Pet",
@@ -38,14 +82,17 @@ class _TelaCadastroPetState extends State<TelaCadastroPet> {
               ),
               SizedBox(height: 10),
               TextField(
+                controller: racaControler,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Raça",
-                  hintText: "Digite a raça do seu pet",
+                  labelText: "Espécie",
+                  hintText: "Digite a espécie do seu pet",
                 ),
               ),
               SizedBox(height: 10),
               TextField(
+                controller: idadeControler,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Idade",
@@ -53,7 +100,8 @@ class _TelaCadastroPetState extends State<TelaCadastroPet> {
                 ),
               ),
               SizedBox(height: 20),
-              Row(mainAxisAlignment: MainAxisAlignment.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FilledButton(
                     style: ButtonStyle(
@@ -62,7 +110,9 @@ class _TelaCadastroPetState extends State<TelaCadastroPet> {
                       ),
                     ),
                     onPressed: () {
-                      // Lógica para salvar os dados do pet
+                      cadastrarPet();
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (builder) => TelaPets(cpf: widget.cpf)));
                     },
                     child: const Text("Cadastrar"),
                   ),

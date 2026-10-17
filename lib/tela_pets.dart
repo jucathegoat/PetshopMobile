@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/tela_cadastro_pet.dart';
 
 class TelaPets extends StatefulWidget {
-  const TelaPets({super.key});
+  const TelaPets({super.key, required this.cpf});
+
+  final String cpf;
 
   @override
   State<TelaPets> createState() => _TelaPetsState();
@@ -29,7 +31,7 @@ class _TelaPetsState extends State<TelaPets> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const TelaCadastroPet(),
+              builder: (context) => TelaCadastroPet(cpf: widget.cpf),
             ),
           );
         },

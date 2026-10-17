@@ -1,5 +1,5 @@
 class UsuarioModel {
-   int? cpf;
+   String? cpf;
    String? email;
    String? nome;
    String? endereco;
@@ -12,7 +12,7 @@ class UsuarioModel {
 
   factory UsuarioModel.fromMap(Map<String, dynamic> map){
     return UsuarioModel.create(
-    map['cpf']?.toInt()?? 0,
+    map['cpf']?? '',
     map['email'] ?? '',
     map['nome'] ?? '',
     map['endereco'] ?? '',
@@ -40,6 +40,17 @@ class UsuarioModel {
       'senha': senha,
     };
   }
+
+    Map toJson(){
+    return{
+      'cpf': cpf,
+      'email': email,
+      'nome': nome,
+      'endereco': endereco,
+      'usuario': usuario,
+      'senha': senha,
+    };
+    }
 
   @override
   String toString() {
