@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:mysql1/mysql1.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+=======
+>>>>>>> 22350a5af239c00dce60a4f47699d41ba519a8e7
 import 'tela_agendamento.dart';
 import 'loja.dart';
 import 'tela_pets.dart';
