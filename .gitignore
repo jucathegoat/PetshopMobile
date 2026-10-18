@@ -46,6 +46,7 @@ app.*.map.json
 
 manager.json
 env.dart
+.env
 
 flutter.env
 **/.env

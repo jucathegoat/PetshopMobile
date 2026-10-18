@@ -1,9 +1,10 @@
-
 import 'dart:convert';
+
 import 'package:shelf/shelf.dart';
 import 'package:shelf/src/handler.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/src/middleware.dart';
+
 import '../models/pet_model.dart';
 import '../services/pet_service.dart';
 import 'api.dart';
@@ -14,10 +15,7 @@ class PetApi extends Api {
   PetApi(this._petService);
 
   @override
-  Handler getHandler({
-    List<Middleware>? middlewares,
-    bool isSecurity = false,
-  }) {
+  Handler getHandler({List<Middleware>? middlewares, bool isSecurity = false}) {
     final router = Router();
 
     // Cadastrar pet associado a um tutor
@@ -28,9 +26,7 @@ class PetApi extends Api {
         if (body.isEmpty) {
           return Response(
             400,
-            body: jsonEncode({
-              'erro': 'O corpo da requisição está vazio.',
-            }),
+            body: jsonEncode({'erro': 'O corpo da requisição está vazio.'}),
           );
         }
 
@@ -39,9 +35,7 @@ class PetApi extends Api {
         if (data['cpf'] == null) {
           return Response(
             400,
-            body: jsonEncode({
-              'erro': 'O CPF do tutor é obrigatório.',
-            }),
+            body: jsonEncode({'erro': 'O CPF do tutor é obrigatório.'}),
           );
         }
 
@@ -61,44 +55,50 @@ class PetApi extends Api {
       } on FormatException {
         return Response(
           400,
-          body: jsonEncode({
-            'erro': 'JSON ou CPF inválido.',
-          }),
+          body: jsonEncode({'erro': 'JSON ou CPF inválido.'}),
           headers: {'content-type': 'application/json'},
         );
       } catch (e) {
         return Response(
           500,
-          body: jsonEncode({
-            'erro': 'Erro ao cadastrar o pet.',
-          }),
+          body: jsonEncode({'erro': 'Erro ao cadastrar o pet.'}),
           headers: {'content-type': 'application/json'},
         );
       }
     });
 
-  router.get('/tutor/<cpfTutor>/pets', (Request req, String cpfTutor) async {
-  final cpf = cpfTutor;
+    router.get('/tutor/<cpfTutor>/pets', (Request req, String cpfTutor) async {
+      final cpf = cpfTutor;
 
-  if (cpf == '') {
-    return Response(
-      400,
-      body: jsonEncode({
-        'sucesso': false,
-        'mensagem': 'CPF inválido.',
-      }),
-    );
-  }
+      if (cpf == '') {
+        return Response(
+          400,
+          body: jsonEncode({'sucesso': false, 'mensagem': 'CPF inválido.'}),
+        );
+      }
 
-  final pets = await _petService.findByTutor(cpf);
+      final pets = await _petService.findByTutor(cpf);
 
-  return Response.ok(
-    jsonEncode({
-      'sucesso': true,
-      'pets': pets,
-    }),
-  );
-});
+      return Response.ok(jsonEncode({'sucesso': true, 'pets': pets}));
+    });
+
+    router.delete('/deletar/pet/<codigoPet>', (
+      Request req,
+      String codigoPet,
+    ) async {
+      try {
+        final id = int.parse(codigoPet);
+        var sucessoDel = await _petService.deletePet(id);
+
+        if (sucessoDel) {
+          return Response(204);
+        } else {
+          return Response.notFound('Pet $id não encontrado');
+        }
+      } catch (e) {
+        return Response.internalServerError(body: 'Erro: $e');
+      }
+    });
 
     return creatHandler(
       router: router,

@@ -1,3 +1,5 @@
+import 'package:mysql1/mysql1.dart';
+
 import '../models/pet_model.dart';
 import 'dao.dart';
 import '../infra/database/db_configuration.dart';
@@ -14,6 +16,23 @@ class PetDao implements Dao<PetModel> {
     );
     return result.affectedRows > 0;
   }
+
+Future<bool> deletePet(int codigoPet) async {
+  // Apaga vínculos na tabela filha
+  await _execQuery(
+    'DELETE FROM tutela WHERE codigo_pet = ?;',
+    [codigoPet],
+  );
+
+  // Agora apaga o pet
+  final result = await _execQuery(
+    'DELETE FROM pet WHERE codigo_pet = ?;',
+    [codigoPet],
+  );
+
+  return result.affectedRows > 0;
+}
+
 
   Future<bool> createWithTutor(PetModel value, String cpfTutor) async {
     final connection = await _dbConfiguration.connection;
@@ -55,15 +74,17 @@ class PetDao implements Dao<PetModel> {
     ''',
       [cpfTutor],
     );
-      return result
-      .map<Map<String, dynamic>>((row) => {
+    return result
+        .map<Map<String, dynamic>>(
+          (row) => {
             'codigoPet': row['codigo_pet'],
             'nome': row['nome'],
             'especie': row['especie'],
             'idade': row['idade'],
-          })
-      .toList();
-}
+          },
+        )
+        .toList();
+  }
 
   @override
   Future<bool> delete(int id) async {
