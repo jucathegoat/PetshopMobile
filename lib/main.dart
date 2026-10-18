@@ -22,6 +22,7 @@ class MeuApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
+
       home: const TelaLogin(),
     );
   }
@@ -42,6 +43,7 @@ class _TelaInicialState extends State<TelaInicial> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 252, 243),
+
       appBar: AppBar(
         title: const Text(
           "Pet Shop Fila Zero",
@@ -54,9 +56,11 @@ class _TelaInicialState extends State<TelaInicial> {
         backgroundColor: const Color.fromARGB(255, 249, 243, 243),
         centerTitle: true,
       ),
+
       bottomNavigationBar: BottomAppBar(
         color: const Color.fromARGB(255, 249, 243, 243),
         elevation: 3,
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -67,6 +71,7 @@ class _TelaInicialState extends State<TelaInicial> {
               ),
               onPressed: () {},
             ),
+
             IconButton(
               icon: const Icon(
                 Icons.shopping_cart,
@@ -79,6 +84,7 @@ class _TelaInicialState extends State<TelaInicial> {
                 );
               },
             ),
+
             IconButton(
               icon: const Icon(
                 Icons.calendar_month,
@@ -93,6 +99,7 @@ class _TelaInicialState extends State<TelaInicial> {
                 );
               },
             ),
+
             IconButton(
               icon: const Icon(
                 Icons.pets,
@@ -101,12 +108,11 @@ class _TelaInicialState extends State<TelaInicial> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => TelaPets(cpf: widget.cpf),
-                  ),
+                  MaterialPageRoute(builder: (context) => TelaPets(cpf: widget.cpf,)),
                 );
               },
             ),
+
             IconButton(
               icon: const Icon(
                 Icons.star,
@@ -125,8 +131,10 @@ class _TelaInicialState extends State<TelaInicial> {
           ],
         ),
       ),
+
       body: Container(
         padding: const EdgeInsets.all(16),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -145,7 +153,7 @@ class _TelaInicialState extends State<TelaInicial> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.notifications,
                     color: Color.fromARGB(255, 194, 194, 194),
                   ),
@@ -171,19 +179,65 @@ class _TelaInicialState extends State<TelaInicial> {
                 maxWidth: MediaQuery.sizeOf(context).width - 20,
                 maxHeight: 250,
               ),
+
               child: CarouselView(
                 itemExtent: 350,
                 backgroundColor: Colors.blueGrey,
+
                 children: [
-                  Image.asset("assets/images/banner1.png", height: 50, fit: BoxFit.cover),
-                  Image.asset("assets/images/banner2.png", height: 50, fit: BoxFit.cover),
-                  Image.asset("assets/images/banner3.png", height: 50, fit: BoxFit.cover),
-                  Image.asset("assets/images/banner4.png", height: 50, fit: BoxFit.cover),
-                  Image.asset("assets/images/banner5.png", height: 50, fit: BoxFit.cover),
-                  Image.asset("assets/images/banner6.png", height: 50, fit: BoxFit.cover),
-                  Image.asset("assets/images/banner7.png", height: 50, fit: BoxFit.cover),
-                  Image.asset("assets/images/banner8.png", height: 50, fit: BoxFit.cover),
-                  Image.asset("assets/images/banner9.png", height: 50, fit: BoxFit.cover),
+                  Image.asset(
+                    "assets/images/banner1.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+
+                  Image.asset(
+                    "assets/images/banner2.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+
+                  Image.asset(
+                    "assets/images/banner3.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+
+                  Image.asset(
+                    "assets/images/banner4.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+
+                  Image.asset(
+                    "assets/images/banner5.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+
+                  Image.asset(
+                    "assets/images/banner6.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+
+                  Image.asset(
+                    "assets/images/banner7.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+
+                  Image.asset(
+                    "assets/images/banner8.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+
+                  Image.asset(
+                    "assets/images/banner9.png",
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
                 ],
               ),
             ),
