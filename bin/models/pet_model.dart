@@ -1,14 +1,16 @@
 class PetModel {
+  int? codigoPet;
    String? especie;
    String? nome;
    int? idade;
 
    PetModel();
 
-  PetModel.create(this.especie, this.nome, this.idade);
+  PetModel.create(this.codigoPet, this.especie, this.nome, this.idade);
 
   factory PetModel.fromMap(Map<String, dynamic> map){
     return PetModel.create(
+    map['codigoPet'] ?.toInt()??0,
     map['especie'] ?? '',
     map['nome'] ?? '',
     map['idade']?.toInt()?? 0);
@@ -17,6 +19,7 @@ class PetModel {
 
   factory PetModel.fromRequest(Map map){
     return PetModel()
+    ..codigoPet = map['especie']
     ..especie = map['especie']
     ..nome = map['nome']
     ..idade = map['idade'];
@@ -24,6 +27,7 @@ class PetModel {
 
     Map<String, dynamic> toMap() {
     return {
+      'codigoPet':codigoPet,
       'especie': especie,
       'nome': nome,
       'idade': idade,
@@ -32,6 +36,6 @@ class PetModel {
 
   @override
   String toString() {
-    return 'PetModel(especie: $especie, nome: $nome, idade: $idade)';
+    return 'PetModel(codigoPet:$codigoPet, especie: $especie, nome: $nome, idade: $idade)';
   }
 }

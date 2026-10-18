@@ -31,4 +31,6 @@ class PetService implements GenericService<PetModel> {
   Future<List<Map<String, dynamic>>> findByTutor(String cpfTutor) async {
   return await _petDao.findByTutor(cpfTutor);
 }
+
+Future<bool> deletePet(int codigoPet) async => _petDao.deletePet(codigoPet);
 }

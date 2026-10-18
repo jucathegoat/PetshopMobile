@@ -3,7 +3,7 @@ import 'dart:io';
 import 'parser_extenison.dart';
 class CustomEnv {
   static Map<String, String> _map = {};
-  static String _file = '.env';
+  static String _file = 'server.env';
 
   CustomEnv._();
 
@@ -31,6 +31,6 @@ static Future<void> _load() async {
 }
 
  static Future<String> _readFile() async {
-    return await File('.env').readAsString();
+    return await File('server.env').readAsString();
   }
 }

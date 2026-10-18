@@ -41,8 +41,6 @@ dependencies:
   http: ^1.6.0
   shelf_router: ^1.1.4
   dart_jsonwebtoken: ^3.4.1
-  cupertino_icons: ^1.0.8
-  mysql1: ^0.21.1
   flutter_dotenv: ^6.0.1
 
 dev_dependencies:
