@@ -1,46 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/tela_novo_agendamento.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+class TelaAvaliacao extends StatelessWidget {
+  const TelaAvaliacao({super.key});
 
-class TelaAgendamento extends StatefulWidget {
-  const TelaAgendamento({super.key});
+  Future<void> enviarAvaliacao(BuildContext context, int nota) async {
+    const String url = 'http://10.0.2.2:8080/api/avaliacoes';
+    // ^ usa 10.0.2.2 se for emulador Android. Se for dispositivo físico, troca pelo IP da sua máquina.
 
-  @override
-  TelaAgendamentoState createState() => TelaAgendamentoState();
-}
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'nota': nota}),
+      );
 
-class TelaAgendamentoState extends State<TelaAgendamento> {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Valeu pelo feedback!')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro: ${response.statusCode}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sem conexão com o servidor')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Agendamentos'),
-        backgroundColor: Color.fromARGB(255, 249, 243, 243),
-        foregroundColor: Colors.black,
-      ),
-      body: SafeArea(
-        child: ListView(
+      appBar: AppBar(title: const Text('Avaliação')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Não há nenhum agendamento', textAlign: TextAlign.center),
+            ElevatedButton(
+              onPressed: () => enviarAvaliacao(context, 1),
+              child: const Text('1 - Ruim'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () => enviarAvaliacao(context, 2),
+              child: const Text('2 - Bom'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () => enviarAvaliacao(context, 3),
+              child: const Text('3 - Excelente'),
+            ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>const TelaNovoAgendamento(),
-            ),
-          );
-        },
-        shape: CircleBorder(
-          side: BorderSide(
-            color: Colors.black,
-            width: 2.0,
-          ),
-        ),
-        child: Icon(Icons.add),
       ),
     );
   }
