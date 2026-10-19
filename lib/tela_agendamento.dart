@@ -1,58 +1,89 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class TelaAvaliacao extends StatelessWidget {
-  const TelaAvaliacao({super.key});
+class TelaAgendamento extends StatefulWidget {
+  const TelaAgendamento({super.key});
 
-  Future<void> enviarAvaliacao(BuildContext context, int nota) async {
-    const String url = 'http://10.0.2.2:8080/api/avaliacoes';
-    // ^ usa 10.0.2.2 se for emulador Android. Se for dispositivo físico, troca pelo IP da sua máquina.
+  @override
+  State<TelaAgendamento> createState() => _TelaAgendamentoState();
+}
 
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'nota': nota}),
-      );
+class _TelaAgendamentoState extends State<TelaAgendamento> {
+  final _petController = TextEditingController();
+  DateTime? _dataSelecionada;
+  TimeOfDay? _horaSelecionada;
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Valeu pelo feedback!')),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro: ${response.statusCode}')),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sem conexão com o servidor')),
-      );
+  Future<void> _selecionarData() async {
+    final data = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if (data != null) {
+      setState(() => _dataSelecionada = data);
     }
+  }
+
+  Future<void> _selecionarHora() async {
+    final hora = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (hora != null) {
+      setState(() => _horaSelecionada = hora);
+    }
+  }
+
+  void _confirmarAgendamento() {
+    if (_petController.text.isEmpty || _dataSelecionada == null || _horaSelecionada == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha todos os campos')),
+      );
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Agendamento realizado!')),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Avaliação')),
-      body: Center(
+      appBar: AppBar(title: const Text('Agendamento')),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => enviarAvaliacao(context, 1),
-              child: const Text('1 - Ruim'),
+            TextField(
+              controller: _petController,
+              decoration: const InputDecoration(labelText: 'Nome do pet'),
             ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => enviarAvaliacao(context, 2),
-              child: const Text('2 - Bom'),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _selecionarData,
+                    child: Text(_dataSelecionada == null
+                        ? 'Escolher data'
+                        : '${_dataSelecionada!.day}/${_dataSelecionada!.month}/${_dataSelecionada!.year}'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _selecionarHora,
+                    child: Text(_horaSelecionada == null
+                        ? 'Escolher hora'
+                        : _horaSelecionada!.format(context)),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => enviarAvaliacao(context, 3),
-              child: const Text('3 - Excelente'),
+              onPressed: _confirmarAgendamento,
+              child: const Text('Confirmar agendamento'),
             ),
           ],
         ),
